@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title></title>
+  <style>
+    .v-highlight {
+      border-bottom: 3px solid orange;
+    }
+  </style>
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -15,12 +20,15 @@
 
       }).on("dragover", function(e) {
         e.preventDefault();
-        console.log("dragover");
+        $(this).addClass("v-highlight");
+      }).on("dragleave", function() {
+        $(this).removeClass("v-highlight");
       }).on("drop", function(e) {
         e.preventDefault();
-        console.log("!", e);
         var data = e.originalEvent.dataTransfer.getData("id");
-        e.target.appendChild(document.getElementById(data));
+        // e.target.appendChild(document.getElementById(data));
+        e.target.parentNode.insertBefore(document.getElementById(data), e.target.nextSibling);
+        $(".v-highlight").removeClass();
       })
     });
   </script>
